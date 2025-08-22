@@ -1,0 +1,45 @@
+🔹 Formas de probar el backend como QA Automation
+
+Manual con herramientas:
+
+Postman (API), DBeaver/SQL Developer (DB).
+
+Útil para exploratorio.
+
+Automatización de pruebas de API:
+
+RestAssured (Java) con TestNG/JUnit.
+
+Karate DSL (sintaxis simple para QA).
+
+Postman + Newman para integración en CI/CD.
+
+Automatización de pruebas de base de datos:
+
+Conexiones JDBC y asserts sobre consultas SQL.
+
+Frameworks especializados como DBUnit.
+
+Automatización de performance:
+
+JMeter en pipelines.
+
+Gatling/K6 con scripts de carga.
+
+Mocks & Contract testing:
+
+WireMock para simular servicios.
+
+Pact.io para contratos de microservicios.
+
+👉 En resumen:
+
+API Testing → RestAssured, Postman, Karate.
+
+DB Testing → JDBC, DBUnit.
+
+Performance → JMeter, Gatling, K6.
+
+Security → OWASP ZAP, Burp Suite.
+
+Contract → Pact, Swagger Validator.
