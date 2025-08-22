@@ -26,3 +26,19 @@ Variables útiles (todas opcionales, también se pueden setear en `src/test/reso
 ## Demo
 Se usa la página pública `the-internet` (login) para un test de ejemplo.
 
+## Comandos GIT utiles
+- Clonar repo - git clone URL
+
+- Actualizar repo local - git pull origin main
+
+- Crear rama nueva - git checkout -b feature/nueva-feature
+
+- Cambiar de rama - git checkout nombre-rama
+
+- Ver ramas - git branch
+
+- Subir rama nueva - git push origin nombre-rama
+
+- Guardar cambios - git add . / git commit -m "Mensaje del cambio"
+
+- Subir cambios - git push
