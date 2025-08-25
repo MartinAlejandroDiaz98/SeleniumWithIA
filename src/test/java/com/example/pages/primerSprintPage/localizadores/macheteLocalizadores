@@ -1,0 +1,35 @@
+🔹 Regla de oro (en empresas profesionales)
+ID único                    → usar By.id o cssSelector.
+Clases/Atributos            → usar cssSelector.
+Texto o combinaciones raras → usar XPath.
+/* ________________________________________________________________________________________ */
+Orden recomendado de localizadores (de mejor a peor)
+1 - By.id → más rápido, único y confiable (siempre que el id sea estable).
+driver.findElement(By.id("username"));
+/* ________________________________________________________________________________________ */
+2 - By.name → útil si el atributo name es único y consistente.
+driver.findElement(By.name("password"));
+/* ________________________________________________________________________________________ */
+3 - By.cssSelector → el más flexible y potente, preferido en proyectos modernos.
+Ejemplos:
+// por clase
+driver.findElement(By.cssSelector(".btn-primary"));
+// por atributo
+driver.findElement(By.cssSelector("input[type='email']"));
+// jerarquía
+driver.findElement(By.cssSelector("form#login button[type='submit']"));
+/* ________________________________________________________________________________________ */
+4 - By.xpath → potente pero menos legible y más frágil. Se usa cuando no hay buenos id o css.
+Ejemplos:
+// por texto
+driver.findElement(By.xpath("//button[text()='Login']"));
+// por atributo
+driver.findElement(By.xpath("//input[@name='email']"));
+// por jerarquía
+driver.findElement(By.xpath("//div[@class='menu']//a[contains(text(),'Usuarios')]"));
+/* ________________________________________________________________________________________ */
+5 - By.className → aceptable si la clase es única (ojo con clases generadas como btn btn-sm).
+driver.findElement(By.className("nav-item"));
+/* ________________________________________________________________________________________ */
+6 - By.tagName → muy general, casi nunca recomendable salvo casos específicos (ej: <iframe>).
+driver.findElement(By.tagName("iframe"));

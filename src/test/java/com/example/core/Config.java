@@ -17,7 +17,7 @@ public class Config {
         // Overwrite con -Dprop
         System.getProperties().forEach((k, v) -> props.setProperty(k.toString(), v.toString()));
     }
-
+    /* Metodos para traer el valor del archivo CONFIG.PROPERTIES de seteos base como por ej navegadores o base url */
     public String getBaseUrl() {
         return props.getProperty("baseUrl");
     }
@@ -35,4 +35,6 @@ public class Config {
     }
     public long getImplicitWait() { return Long.parseLong(props.getProperty("implicitWait", "0")); }
     public long getExplicitWait() { return Long.parseLong(props.getProperty("explicitWait", "10")); }
+    /* ------------------------------------------------------------------------------------------------------------ */
+    
 }

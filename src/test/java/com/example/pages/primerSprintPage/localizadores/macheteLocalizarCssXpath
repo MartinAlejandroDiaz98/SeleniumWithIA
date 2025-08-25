@@ -1,0 +1,21 @@
+🔹 Comparativa CSS vs XPath
+Objetivo	CSS Selector	XPath	Comentario
+Seleccionar por ID	        #username	//*[@id='username']	CSS es más corto.
+/* ________________________________________________________________________________________ */
+Seleccionar por clase	    .password-field	//*[@class='password-field']	XPath requiere el atributo completo.
+/* ________________________________________________________________________________________ */
+Seleccionar por atributo	input[name='user']	//input[@name='user']	Equivalentes, CSS más limpio.
+/* ________________________________________________________________________________________ */
+Seleccionar por etiqueta    + atributo	button[type='submit']	//button[@type='submit']	Ambos simples.
+/* ________________________________________________________________________________________ */
+Seleccionar descendiente	#login-form button	//*[@id='login-form']//button	CSS usa jerarquía, XPath usa //.
+/* ________________________________________________________________________________________ */
+Seleccionar hijo directo	#login-form > label	//*[@id='login-form']/label	Muy parecidos.
+/* ________________________________________________________________________________________ */
+Seleccionar por clases	    button.btn.primary	//button[contains(@class,'btn') and contains(@class,'primary')]	CSS mucho más claro.
+/* ________________________________________________________________________________________ */
+Seleccionar por posición	#login-form label:nth-child(1)	(//*[@id='login-form']//label)[1]	Ambos permiten index, pero XPath es más flexible.
+/* ________________________________________________________________________________________ */
+Seleccionar por texto	❌ No soportado	//button[text()='Login']	Ventaja de XPath.
+/* ________________________________________________________________________________________ */
+Seleccionar por parte del texto	❌ No soportado	//a[contains(text(),'Forgot')]	Solo XPath lo permite.

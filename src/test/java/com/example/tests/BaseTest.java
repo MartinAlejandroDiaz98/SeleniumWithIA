@@ -14,10 +14,11 @@ public class BaseTest {
     protected DriverManager driverManager;
     protected Config config;
     protected WebDriver driver;
-
+    /* Before method always run en true, dice que SIEMPRE que se ejecute un test ejecute primero esto. */
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})
     public void setUp(@Optional("chrome") String browser) {
+        /* Inicio configuraciones */
         config = new Config();
         System.setProperty("browser", browser); // permite que el parámetro overridee config
         driverManager = DriverManager.getInstance();

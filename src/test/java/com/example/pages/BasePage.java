@@ -12,12 +12,12 @@ public class BasePage {
         this.driver = driver;
         this.waits = new Waits(driver, explicitWaitSeconds);
     }
-
+    /* Declarando de FORMA PROTECTED las clases hijas pueden usar los metodos sin necesidad de iniciazion de clase. Concepto encampsulamiento */
     protected void click(By locator) { waits.clickable(locator).click(); }
     protected void type(By locator, String text) {
         var el = waits.visible(locator);
         el.clear();
         el.sendKeys(text);
     }
-    protected String text(By locator) { return waits.visible(locator).getText(); }
+    protected String getText(By locator) { return waits.visible(locator).getText(); }
 }
