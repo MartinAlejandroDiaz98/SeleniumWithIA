@@ -1,8 +1,9 @@
 package com.example.pages;
 
-import com.example.core.Waits;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
+import com.example.utils.Waits;
 
 public class BasePage {
     protected WebDriver driver;

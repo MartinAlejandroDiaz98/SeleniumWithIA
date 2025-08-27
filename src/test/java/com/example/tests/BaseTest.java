@@ -1,10 +1,12 @@
 package com.example.tests;
 
-import com.example.core.Config;
-import com.example.core.DriverManager;
+import com.example.config.Config;
+import com.example.driver.DriverManager;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
@@ -14,6 +16,11 @@ public class BaseTest {
     protected DriverManager driverManager;
     protected Config config;
     protected WebDriver driver;
+
+    @BeforeSuite
+    public void setupAllureDirectory() {
+    System.setProperty("allure.results.directory", "target/allure-results");
+    }
     /* Before method always run en true, dice que SIEMPRE que se ejecute un test ejecute primero esto. */
     @BeforeMethod(alwaysRun = true)
     @Parameters({"browser"})

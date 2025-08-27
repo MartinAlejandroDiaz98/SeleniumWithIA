@@ -3,8 +3,12 @@
   listeners="com.example.core.TestListener" name="MiniFramework Suite" verbose="1" parallel="methods" thread-count="3">
   <test name="UI Tests">
     <parameter name="browser" value="${browser}"/>
-    <classes>
+    <!-- <classes>
       <class name="com.example.tests.LoginTest"/>
-    </classes>
+    </classes> -->
+    <packages>
+            <!-- Esto hace que TestNG ejecute todos los tests dentro del paquete -->
+            <package name="com.example.tests.*"/>
+        </packages>
   </test>
 </suite>
