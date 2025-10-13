@@ -31,10 +31,19 @@ public class DriverFactory {
                 chrome.addArguments("--start-maximized");
                 chrome.addArguments("--disable-gpu");
                 chrome.addArguments("--remote-allow-origins=*");
-                // Ejemplo de prefs si hace falta descargar archivos, etc.
-                Map<String, Object> prefs = new HashMap<>();
-                prefs.put("profile.default_content_setting_values.notifications", 2);
-                chrome.setExperimentalOption("prefs", prefs);
+        /* BORRAR EN CASO DE NO NECESITAR O CONFLICTOS, YA QUE ESTO ES POR EL NAVEGADOR ERROR CONTRASENAS VULNERADAS */
+        chrome.addArguments("--incognito");
+        // 🔹 Desactivar password manager y leak detection
+        chrome.addArguments("--disable-features=PasswordManagerOnboarding,PasswordManagerEnabled,PasswordLeakDetection,PasswordCheck");
+        chrome.addArguments("--disable-save-password-bubble");
+        // 🔹 Preferencias de Chrome para anular credenciales
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("credentials_enable_service", false);
+        prefs.put("profile.password_manager_enabled", false);
+        prefs.put("profile.default_content_setting_values.notifications", 2);
+        chrome.setExperimentalOption("prefs", prefs);
+       /* ------------------------------------------------------------------------------------------------- */
+
                 if (isRemote(gridUrl)) {
                     return new RemoteWebDriver(toURL(gridUrl), chrome);
                 } else {

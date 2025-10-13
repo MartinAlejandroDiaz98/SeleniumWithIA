@@ -17,16 +17,21 @@ public class Waits {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
     }
     /* Waits para objetos */
+    /* Visibilidad del elemento */
     public WebElement visible(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
+    /* Elemento sea clickable */
     public WebElement clickable(By locator) {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
-
+    /* Elemento sea invisible */
     public boolean invisible(By locator) {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+    /* WebElement sea invisble */
+    public boolean invisible(WebElement element) {
+        return wait.until(ExpectedConditions.invisibilityOf(element));
     }
     /* Waits para alerts */ 
     public void alertIsPresent() {

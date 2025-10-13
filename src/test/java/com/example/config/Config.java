@@ -21,6 +21,9 @@ public class Config {
     public String getBaseUrl() {
         return props.getProperty("baseUrl");
     }
+    public String getSauceDemoUrl(){
+        return props.getProperty("sauceDemoUrl");
+    }
     public String getBrowser() {
         return props.getProperty("browser", "chrome");
     }
@@ -32,6 +35,12 @@ public class Config {
     }
     public String getGridUrl() {
         return props.getProperty("gridUrl", "");
+    }
+    public String getUser(){
+        return props.getProperty("username");
+    }
+    public String getPass(){
+        return props.getProperty("password");
     }
     public long getImplicitWait() { return Long.parseLong(props.getProperty("implicitWait", "0")); }
     public long getExplicitWait() { return Long.parseLong(props.getProperty("explicitWait", "10")); }

@@ -1,0 +1,1 @@
+{"uuid":"9d3778a0-b8f2-4d4f-8480-b41d9b6887e8","name":"MiniFramework Suite","children":["6953e1d0-d0a7-49e5-984c-071f98a5f779"],"befores":[{"name":"setupAllureDirectory","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1757455668492,"stop":1757455668497}],"afters":[],"start":1757455668473,"stop":1757455692005}
