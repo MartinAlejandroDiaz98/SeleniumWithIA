@@ -1,10 +1,8 @@
 package com.example.pages.sauceDemo.Checkout;
 
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 
 import com.example.pages.BasePage;
 
