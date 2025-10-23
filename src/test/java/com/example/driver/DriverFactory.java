@@ -9,17 +9,21 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.example.config.Config;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DriverFactory {
 
-    public static WebDriver createDriver(Config config) {
+    public static WebDriver createDriver(Config config) throws IOException {
         String browser = config.getBrowser();
         boolean headless = config.isHeadless();
         String gridUrl = config.getGridUrl();
@@ -34,6 +38,9 @@ public class DriverFactory {
                 chrome.addArguments("--disable-dev-shm-usage");
                 chrome.addArguments("--disable-gpu");
                 }else{
+                    // crea una carpeta temporal única para este run
+                    Path tempProfile = Files.createTempDirectory("chrome-profile-");
+                    chrome.addArguments("--user-data-dir=" + tempProfile.toString());
                     chrome.addArguments("--no-sandbox");
                     chrome.addArguments("--disable-dev-shm-usage");
                     chrome.addArguments("--disable-gpu");
