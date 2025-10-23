@@ -27,11 +27,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
-          
-      - name: Install Chrome
+      
+      - name: Install Chrome 139
         run: |
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable   
+          wget https://dl.google.com/linux/direct/google-chrome-stable_139.0.2171.71-1_amd64.deb
+          sudo dpkg -i google-chrome-stable_139.0.2171.71-1_amd64.deb || sudo apt-get -f install -y    
 
       - name: Run tests
         run: mvn clean test -Dbrowser=chrome -Dheadless=true #-Dsurefire.suiteXmlFiles=testng.xml
