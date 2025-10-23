@@ -27,10 +27,12 @@ public class DriverFactory {
         switch (browser.toLowerCase()) {
             case "chrome":
                 ChromeOptions chrome = new ChromeOptions();
-                if (headless) chrome.addArguments("--headless=new");
-                chrome.addArguments("--start-maximized");
+                if (Boolean.getBoolean("headless")) {
+                chrome.addArguments("--headless");
+                chrome.addArguments("--no-sandbox");
+                chrome.addArguments("--disable-dev-shm-usage");
                 chrome.addArguments("--disable-gpu");
-                chrome.addArguments("--remote-allow-origins=*");
+            }
         /* BORRAR EN CASO DE NO NECESITAR O CONFLICTOS, YA QUE ESTO ES POR EL NAVEGADOR ERROR CONTRASENAS VULNERADAS */
         chrome.addArguments("--incognito");
         // 🔹 Desactivar password manager y leak detection
