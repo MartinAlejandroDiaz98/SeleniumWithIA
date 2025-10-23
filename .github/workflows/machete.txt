@@ -7,3 +7,5 @@ cache	        Guarda dependencias Maven entre ejecuciones → acelera el pipelin
 mvn clean install	Compila el proyecto y descarga dependencias.
 mvn test	    Ejecuta tus pruebas Selenium/TestNG.
 upload-artifact	Guarda el resultado Allure (target/allure-results) para descargarlo luego.
+
+ad
