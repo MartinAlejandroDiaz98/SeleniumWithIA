@@ -31,6 +31,6 @@ public class LoginSauceTest extends BaseTest {
     public void usersLoginWithValidCredentials(String user, String pass){
         loginPage.login(user, pass, config.getSauceDemoUrl())
         .waitHomeDisplayed();
-
+        
     }
 }

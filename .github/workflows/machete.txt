@@ -1,0 +1,9 @@
+Paso	        Qué hace
+on:	            Indica cuándo se ejecuta: en cada push o pull request al branch main.
+runs-on:	    Usa una máquina virtual Ubuntu preconfigurada de GitHub.
+checkout	    Descarga tu repo para poder ejecutar comandos sobre él.
+setup-java	    Instala JDK 17 (podés cambiarlo a la versión que uses).
+cache	        Guarda dependencias Maven entre ejecuciones → acelera el pipeline.
+mvn clean install	Compila el proyecto y descarga dependencias.
+mvn test	    Ejecuta tus pruebas Selenium/TestNG.
+upload-artifact	Guarda el resultado Allure (target/allure-results) para descargarlo luego.
