@@ -32,7 +32,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-          
+
       - name: Install interfaz grafica
         run: |
           sudo apt-get update
@@ -41,7 +41,7 @@ jobs:
           export DISPLAY=:99
 
       - name: Run tests
-        run: mvn clean test -Dbrowser=chrome -Dheadless=true #-Dsurefire.suiteXmlFiles=testng.xml
+        run: mvn clean test -Dbrowser=chrome #-Dsurefire.suiteXmlFiles=testng.xml
 
       # Guardar allure-results aunque los tests fallen
       - name: Upload Allure Results
