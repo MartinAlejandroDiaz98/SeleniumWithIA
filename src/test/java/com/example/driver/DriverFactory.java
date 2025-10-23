@@ -33,18 +33,12 @@ public class DriverFactory {
                 chrome.addArguments("--no-sandbox");
                 chrome.addArguments("--disable-dev-shm-usage");
                 chrome.addArguments("--disable-gpu");
-            }
-        /* BORRAR EN CASO DE NO NECESITAR O CONFLICTOS, YA QUE ESTO ES POR EL NAVEGADOR ERROR CONTRASENAS VULNERADAS */
-        chrome.addArguments("--incognito");
-        // 🔹 Desactivar password manager y leak detection
-        chrome.addArguments("--disable-features=PasswordManagerOnboarding,PasswordManagerEnabled,PasswordLeakDetection,PasswordCheck");
-        chrome.addArguments("--disable-save-password-bubble");
-        // 🔹 Preferencias de Chrome para anular credenciales
-        Map<String, Object> prefs = new HashMap<>();
-        prefs.put("credentials_enable_service", false);
-        prefs.put("profile.password_manager_enabled", false);
-        prefs.put("profile.default_content_setting_values.notifications", 2);
-        chrome.setExperimentalOption("prefs", prefs);
+                }else{
+                    chrome.addArguments("--no-sandbox");
+                    chrome.addArguments("--disable-dev-shm-usage");
+                    chrome.addArguments("--disable-gpu");
+                    chrome.addArguments("--window-size=1920,1080");
+                }
        /* ------------------------------------------------------------------------------------------------- */
 
                 if (isRemote(gridUrl)) {
