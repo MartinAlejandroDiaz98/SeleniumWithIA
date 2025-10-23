@@ -23,7 +23,7 @@ import java.util.Map;
 
 public class DriverFactory {
 
-    public static WebDriver createDriver(Config config) throws IOException {
+    public static WebDriver createDriver(Config config){
         String browser = config.getBrowser();
         boolean headless = config.isHeadless();
         String gridUrl = config.getGridUrl();
@@ -39,8 +39,12 @@ public class DriverFactory {
                 chrome.addArguments("--disable-gpu");
                 }else{
                     // crea una carpeta temporal única para este run
-                    Path tempProfile = Files.createTempDirectory("chrome-profile-");
-                    chrome.addArguments("--user-data-dir=" + tempProfile.toString());
+                    try {
+                        Path tempProfile = Files.createTempDirectory("chrome-profile-");
+                        chrome.addArguments("--user-data-dir=" + tempProfile.toString());
+                    } catch (IOException e) {
+                        System.err.println("⚠️ No se pudo crear el perfil temporal de Chrome: " + e.getMessage());
+                    }
                     chrome.addArguments("--no-sandbox");
                     chrome.addArguments("--disable-dev-shm-usage");
                     chrome.addArguments("--disable-gpu");
