@@ -29,7 +29,7 @@ public class DriverFactory {
             case "chrome":
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chrome = new ChromeOptions();
-                if (Boolean.getBoolean("headless")) {
+                if (headless) {
                 chrome.addArguments("--headless=new");
                 chrome.addArguments("--no-sandbox");
                 chrome.addArguments("--disable-dev-shm-usage");
