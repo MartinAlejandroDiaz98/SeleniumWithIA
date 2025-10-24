@@ -1,19 +1,15 @@
-name: CI - Selenium Tests
+name: CI - Selenium Tests (WebDriverManager + no headless)
 
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
-  workflow_dispatch:  # permite ejecutar manualmente
+  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    container:
-          image: seleniarm/standalone-chromium:128.0
-          options: --shm-size 2g
 
     steps:
       - name: Checkout repository
@@ -31,11 +27,32 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven
-      
-      - name: Run tests
-        run: mvn clean test -Dbrowser=chrome -Dheadless=true #-Dsurefire.suiteXmlFiles=testng.xml
 
-      # Guardar allure-results aunque los tests fallen
+      # 🔹 Instala Google Chrome (sin el driver)
+      - name: Install Google Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg2
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      # 🔹 Inicia entorno gráfico virtual (para ejecutar sin headless)
+      - name: Start virtual display
+        run: |
+          sudo apt-get install -y xvfb
+          export DISPLAY=:99
+          Xvfb :99 -ac &
+          sleep 3
+
+      # 🔹 Ejecuta los tests en modo normal (no headless)
+      - name: Run tests
+        env:
+          DISPLAY: :99
+        run: mvn clean test -Dbrowser=chrome
+
+      # 🔹 Guarda los resultados Allure
       - name: Upload Allure Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,26 +60,15 @@ jobs:
           name: allure-results
           path: allure-results
 
-      # Generar el reporte HTML a partir de los resultados
       - name: Generate Allure Report
         if: always()
         run: |
           npm install -g allure-commandline --save-dev
           allure generate allure-results --clean -o allure-report
 
-      # Subir el reporte HTML al pipeline (artefacto)
       - name: Upload Allure HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
-
-          #🧠 Qué hace este pipeline
-          # Checkout / Baja tu código desde el repo
-          # Setup Java / Configura Java 17
-          # Cache Maven / Acelera builds
-          # Run tests / Ejecuta tus tests con TestNG
-          # Upload allure-results / Guarda los resultados brutos
-          # Generate report / Genera el HTML con Allure
-          # Upload report / Sube el HTML como artefacto 

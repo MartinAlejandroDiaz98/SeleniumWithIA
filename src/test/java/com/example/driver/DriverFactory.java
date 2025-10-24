@@ -34,12 +34,12 @@ public class DriverFactory {
                 chrome.addArguments("--no-sandbox");
                 chrome.addArguments("--disable-dev-shm-usage");
                 chrome.addArguments("--disable-gpu");
-                } else {
+                }
+                    chrome.addArguments("--start-maximized");
                     chrome.addArguments("--no-sandbox");
                     chrome.addArguments("--disable-dev-shm-usage");
                     chrome.addArguments("--disable-gpu");
-                    chrome.addArguments("--window-size=1920,1080");
-                }
+                
        /* ------------------------------------------------------------------------------------------------- */
 
                 if (isRemote(gridUrl)) {
