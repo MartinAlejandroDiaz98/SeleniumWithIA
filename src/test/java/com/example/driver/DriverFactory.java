@@ -17,9 +17,6 @@ import com.example.config.Config;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DriverFactory {
 
@@ -33,18 +30,11 @@ public class DriverFactory {
                 WebDriverManager.chromedriver().setup();
                 ChromeOptions chrome = new ChromeOptions();
                 if (Boolean.getBoolean("headless")) {
-                chrome.addArguments("--headless");
+                chrome.addArguments("--headless=new");
                 chrome.addArguments("--no-sandbox");
                 chrome.addArguments("--disable-dev-shm-usage");
                 chrome.addArguments("--disable-gpu");
-                }else{
-                    // crea una carpeta temporal única para este run
-                    try {
-                        Path tempProfile = Files.createTempDirectory("chrome-profile-");
-                        chrome.addArguments("--user-data-dir=" + tempProfile.toString());
-                    } catch (IOException e) {
-                        System.err.println("⚠️ No se pudo crear el perfil temporal de Chrome: " + e.getMessage());
-                    }
+                } else {
                     chrome.addArguments("--no-sandbox");
                     chrome.addArguments("--disable-dev-shm-usage");
                     chrome.addArguments("--disable-gpu");
