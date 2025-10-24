@@ -31,9 +31,12 @@ jobs:
       # 🔹 Instala Google Chrome (sin el driver)
       - name: Install Google Chrome
         run: |
-          wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_118.0.5993.90-1_amd64.deb
-          sudo apt install -y ./google-chrome-stable_118.0.5993.90-1_amd64.deb
-          google-chrome --version
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg2
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
 
       # 🔹 Inicia entorno gráfico virtual (para ejecutar sin headless)
       - name: Start virtual display
@@ -48,14 +51,6 @@ jobs:
         env:
           DISPLAY: :99
         run: mvn clean test -Dbrowser=chrome -Dheadless=true
-
-      # 🔹 Guarda allure-results reales (dentro de /target)
-      - name: Upload Allure Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: target/allure-results
 
       # 🔹 Genera reporte HTML de Allure
       - name: Generate Allure Report
