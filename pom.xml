@@ -15,6 +15,7 @@
     <testng.version>7.10.2</testng.version>
     <webdrivermanager.version>5.9.3</webdrivermanager.version>
     <allure.version>2.27.0</allure.version>
+    <aspectj.version>1.9.22</aspectj.version>
   </properties>
 
   <dependencies>
@@ -56,19 +57,24 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
         <configuration>
-          <suiteXmlFiles>
-            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
-          </suiteXmlFiles>
-          <systemPropertyVariables>
-            <browser>${browser}</browser>
-          </systemPropertyVariables>
-          <properties>
-            <property>
-              <name>listener</name>
-              <value>io.qameta.allure.testng.AllureTestNg</value>
-            </property>
-          </properties>
+                     <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>io.qameta.allure.testng.AllureTestNg</value>
+                        </property>
+                    </properties>
+                
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
         </configuration>
+        <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+          </dependencies>
       </plugin>
 
       <!-- Allure plugin -->
@@ -77,8 +83,8 @@
         <artifactId>allure-maven</artifactId>
         <version>2.12.0</version>
         <configuration>
-          <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-          <reportDirectory>${project.build.directory}/allure-report</reportDirectory>
+          <resultsDirectory>target/allure-results</resultsDirectory>
+          <reportDirectory>target/allure-report</reportDirectory>
         </configuration>
       </plugin>
     </plugins>
