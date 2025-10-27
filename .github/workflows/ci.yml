@@ -61,7 +61,7 @@ jobs:
         - name: Check Test Status and Fail if necessary
           if: steps.run_tests.outcome == 'failure'
           run: exit 1
-          
+
   # 🔹 Sube los resultados crudos de Allure como artefacto            
   publish-report:
     name: 📦 Publish Allure Report to Pages
@@ -70,6 +70,9 @@ jobs:
     runs-on: ubuntu-latest
     # Se ejecuta SIEMPRE que el job 'test' haya terminado (éxito o fallo)
     if: always() 
+    # 🌟 AÑADE ESTE BLOQUE 🌟
+    permissions:
+      contents: write # Permite al token de GitHub hacer push a las ramas (necesario para la acción de Pages) 
 
     steps:
       # 1. Descarga los resultados crudos subidos por el job anterior
