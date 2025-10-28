@@ -106,3 +106,5 @@ jobs:
           destination_dir: ${{ github.ref_name }}/allure-report
           # Usaremos el nombre de la rama actual como prefijo en el commit
           commit_message: "Reporte Allure para rama ${{ github.ref_name }}"
+          # ⭐ ESTO ES CLAVE para subdirectorios complejos ⭐
+          disable_nojekyll: false
