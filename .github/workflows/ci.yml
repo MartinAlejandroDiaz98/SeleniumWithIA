@@ -94,8 +94,12 @@ jobs:
           # Directorio de salida donde se generará el HTML
           report_path: allure-report
       # ⭐ PASO CRÍTICO: CREAR .nojekyll en la carpeta local de Allure
-      - name: Create .nojekyll file
-        run: touch allure-report/.nojekyll
+      # ❌ (Tu step fallido)
+      # - name: Create .nojekyll file
+      #   run: touch allure-report/.nojekyll
+      # ✅ (Solución 1: Usar echo para forzar la creación del archivo)
+      - name: Create .nojekyll file in Allure Report directory
+        run: echo "" > allure-report/.nojekyl
       # 3. Sube el Reporte Generado a GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
