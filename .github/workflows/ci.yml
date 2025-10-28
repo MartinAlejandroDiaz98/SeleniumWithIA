@@ -57,60 +57,43 @@ jobs:
           with:
             name: allure-results-raw
             path: target/allure-results # Sube la carpeta con los JSONs
+          # 1. Descarga los resultados crudos subidos por el job anterior
+        - name: Download Allure Results
+          uses: actions/download-artifact@v4
+          with:
+            name: allure-results-raw
+            path: allure-results # Descarga los JSONs aquí
 
+        # 2. Genera el Reporte HTML usando una Action dedicada
+        # Esto encapsula 'npm install allure-commandline' y 'allure generate'
+        - name: Generate Allure Report HTML
+          uses: simple-elf/allure-report-action@v1.7
+          with:
+            # Directorio de entrada donde se descargaron los resultados
+            results_path: allure-results
+            # Directorio de salida donde se generará el HTML
+            report_path: allure-report
+          # ⭐ PASO CRÍTICO 2: Crear .nojekyll (Ahora con permisos garantizados)
+        - name: Create .nojekyll file in Allure Report directory
+          run: echo "" > allure-report/.nojekyll
+        # 3. Sube el Reporte Generado a GitHub Pages
+        - name: Deploy to GitHub Pages
+          uses: peaceiris/actions-gh-pages@v4
+          with:
+            # Token de autenticación automático de GitHub
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            # El directorio que se subirá a la rama 'gh-pages' o 'main/docs'
+            publish_dir: allure-report
+            # Rama destino (es decir cada rama con su reporte) para recien ahi integrar si esta todo ok
+            destination_dir: ${{ github.ref_name }}/allure-report
+            # Usaremos el nombre de la rama actual como prefijo en el commit
+            commit_message: "Reporte Allure para rama ${{ github.ref_name }}"
+            # ⭐ ESTO ES CLAVE para subdirectorios complejos ⭐
+            #disable_nojekyll: false
         # 5. Fuerza el Fallo del Job si los Tests Fallaron
         # Esto mantiene el indicador de CI/CD en rojo si los tests no pasaron
         - name: Check Test Status and Fail if necessary
           if: steps.run_tests.outcome == 'failure'
           run: exit 1
-
-  # 🔹 Sube los resultados crudos de Allure como artefacto            
-  publish-report:
-    name: 📦 Publish Allure Report to Pages
-    # Depende del job 'test'. Se ejecuta cuando 'test' termina.
-    needs: test
-    runs-on: ubuntu-latest
-    # Se ejecuta SIEMPRE que el job 'test' haya terminado (éxito o fallo)
-    if: always() 
-    # 🌟 AÑADE ESTE BLOQUE 🌟
-    permissions:
-      contents: write # Permite al token de GitHub hacer push a las ramas (necesario para la acción de Pages) 
-
-    steps:
-      # 1. Descarga los resultados crudos subidos por el job anterior
-      - name: Download Allure Results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results-raw
-          path: allure-results # Descarga los JSONs aquí
-
-      # 2. Genera el Reporte HTML usando una Action dedicada
-      # Esto encapsula 'npm install allure-commandline' y 'allure generate'
-      - name: Generate Allure Report HTML
-        uses: simple-elf/allure-report-action@v1.7
-        with:
-          # Directorio de entrada donde se descargaron los resultados
-          results_path: allure-results
-          # Directorio de salida donde se generará el HTML
-          report_path: allure-report
-      # ⭐ PASO CRÍTICO 1: Asignar permisos de escritura (777) a la carpeta
-      - name: Fix Permissions on Allure Report Directory
-        # 777: Permite leer, escribir y ejecutar a todos (Owner, Group, Others)
-        run: chmod -R 777 allure-report
-      # ⭐ PASO CRÍTICO 2: Crear .nojekyll (Ahora con permisos garantizados)
-      - name: Create .nojekyll file in Allure Report directory
-        run: echo "" > allure-report/.nojekyll
-      # 3. Sube el Reporte Generado a GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          # Token de autenticación automático de GitHub
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          # El directorio que se subirá a la rama 'gh-pages' o 'main/docs'
-          publish_dir: allure-report
-          # Rama destino (es decir cada rama con su reporte) para recien ahi integrar si esta todo ok
-          destination_dir: ${{ github.ref_name }}/allure-report
-          # Usaremos el nombre de la rama actual como prefijo en el commit
-          commit_message: "Reporte Allure para rama ${{ github.ref_name }}"
-          # ⭐ ESTO ES CLAVE para subdirectorios complejos ⭐
-          #disable_nojekyll: false
+        
+ 
