@@ -1,0 +1,11 @@
+############ Flujo de Trabajo Colaborativo Sugerido ############
+Este es el proceso ideal para que el equipo use este reporte de "sanidad":
+
+1 - El desarrollador trabaja en su rama (feature/login).
+2 - Hace push a esa rama.
+3 - GitHub Actions ejecuta el workflow y publica el reporte de esa rama en su subdirectorio (ej: /feature/login/allure-report/).
+4 - El desarrollador abre un Pull Request (PR) hacia master.
+CLAVE: En el cuerpo del PR, el desarrollador pega el enlace al reporte de su rama, permitiendo al revisor verificar la sanidad de los tests de forma interactiva (ej: "Revisor, puedes ver el reporte de esta rama aquí: [URL]").
+
+Una vez aprobado el PR y mergueado a master, el reporte principal (/) se actualiza para reflejar el estado final de sanidad.
+Esta estrategia aísla el trabajo y convierte el reporte de Allure en un artefacto clave para la revisión de código.
