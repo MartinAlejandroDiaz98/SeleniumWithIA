@@ -24,6 +24,7 @@ public class TableTest extends BaseTest {
         values.put(0, "Smith");
         values.put(2, "jsmith@gmail.com");
         By edit = By.cssSelector("a[href='#edit']");
+        System.out.println("asd");
         table.clickButtonInRow(table.findRowByValues(values), edit);
         Assert.assertEquals(driver.getCurrentUrl(), "https://the-internet.herokuapp.com/tables#edit");
     }
