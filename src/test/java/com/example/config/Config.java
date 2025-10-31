@@ -14,6 +14,8 @@ public class Config {
         } catch (IOException e) {
             throw new RuntimeException("No se pudo cargar config.properties", e);
         }
+
+        /* Esta linea le dice que si recibe por parametro de consola un valor con el -D sobreescribe el valor */
         // Overwrite con -Dprop
         System.getProperties().forEach((k, v) -> props.setProperty(k.toString(), v.toString()));
     }
