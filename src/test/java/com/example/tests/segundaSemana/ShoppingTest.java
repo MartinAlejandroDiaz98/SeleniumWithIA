@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import com.example.data.ShoppingData;
 import com.example.flows.LoginFlow;
 import com.example.pages.sauceDemo.CartSaucePage;
 import com.example.tests.BaseTest;
@@ -16,8 +17,14 @@ public class ShoppingTest extends BaseTest {
 
     @DataProvider(name="products")
     public Object[][] product(){
+        ShoppingData data = new ShoppingData.Builder()
+        .withProductsNameList(List.of("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt"))
+        .withFirstName("Juan")
+        .withLastName("Perez")
+        .withCompleteMessage("Thank you for your order!")
+        .build();
         return new Object[][]{
-            {List.of("Sauce Labs Backpack", "Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt")}
+            {data}
         };
     }
     @DataProvider(name="completeCheckout")
@@ -35,17 +42,17 @@ public class ShoppingTest extends BaseTest {
     }
     
     @Test(dataProvider = "products", description = "Agregar productos al carrito mediante lista y verificar que esten")
-    public void shouldAddProductsWithTextToCart(List<String> productsNameList)
+    public void shouldAddProductsWithTextToCart(ShoppingData data)
     {
         List <String> productsCart = loginFlow.loginAs(config.getSauceDemoUrl(), config.getUser(), config.getPass())
-        .addProductsToCartByName(productsNameList)
+        .addProductsToCartByName(data.getProductsNameList())
         .goToCart()
         .getCartItems()
         .stream()
         .map(i -> i.getTitle())
         .toList();
 
-        Assert.assertEquals(productsCart, productsNameList, "No es el producto esperado, revisar. Valor actual: " + productsCart);
+        Assert.assertEquals(productsCart, data.getProductsNameList(), "No es el producto esperado, revisar. Valor actual: " + productsCart);
     }
     
     @Test(dataProvider = "completeCheckout", description = "Agregar productos al carrito, verificar que esten y completar checkout")
