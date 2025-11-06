@@ -5,13 +5,15 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.example.pages.sauceDemo.LoginSaucePage;
 import com.example.tests.BaseTest;
+import com.example.utils.SauceDemoSetup;
+import com.example.utils.SetUpFacade;
 
 public class LoginSauceTest extends BaseTest {
-    private LoginSaucePage loginPage;
+    private SauceDemoSetup sauceDemoSetup;
     /* ------------------------------------------------------------------------------------------------- */
     @BeforeMethod
     private void setUp(){
-        loginPage = new LoginSaucePage(driver, config.getImplicitWait());
+         sauceDemoSetup = SetUpFacade.inicializeSaucePages();
     }
     /* ------------------------------------------------------------------------------------------------- */
     /* Users */
@@ -29,7 +31,7 @@ public class LoginSauceTest extends BaseTest {
     /* Test */
     @Test(dataProvider = "validUsers")
     public void usersLoginWithValidCredentials(String user, String pass){
-        loginPage.login(user, pass, config.getSauceDemoUrl())
+        sauceDemoSetup.loginSaucePage.login(user, pass, config.getSauceDemoUrl())
         .waitHomeDisplayed();
         
     }
